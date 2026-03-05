@@ -1198,13 +1198,16 @@ export default function App() {
   }, []);
 
   // ── Persist userData on every change ─────────────────────────────────────
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (authUser && userData) {
       dbSet("ds:user:" + authUser.username, userData);
     }
-  }, [userData]);
+  }, [userData]); // intentionally omit authUser — it never changes after login
 
   // ── Generate questions once user is onboarded ─────────────────────────────
+  const activeTracksKey = (userData?.activeTracks || []).join(",");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!userData?.onboarded || genQ) return;
     if (questions?.date === todayStr()) return;
@@ -1213,7 +1216,7 @@ export default function App() {
       setQuestions(q);
       setGenQ(false);
     });
-  }, [userData?.onboarded, (userData?.activeTracks || []).join(",")]);
+  }, [userData?.onboarded, activeTracksKey]); // genQ and questions.date intentionally omitted to avoid re-trigger loops
 
   // ── Auth handlers ─────────────────────────────────────────────────────────
   const handleLogin = useCallback(({ username, displayName, data }) => {
