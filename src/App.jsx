@@ -21,8 +21,7 @@ const C = {
   border:       "#1E2535",
   text:         "#EEF0F8",
   textSub:      "#7A8499",
-  textMuted:    "#3D4556",
-  accent:       "#FF6B35",
+  textMuted:    "#3D4556"
 };
 
 // ─── STORAGE (shared = persists for ALL users) ────────────────────────────────
